@@ -68,10 +68,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Registration Form</h4>
+          <h4 class="modal-title" ng-show="!posted">Registration Form</h4>
+          <h4 class="modal-title" ng-show="posted">Thank you!</h4>
+          <h4 class="modal-title" ng-show="error">Error</h4>
         </div>
         <div class="modal-body">
-          <form name="registrationForm" class="form-horizontal">
+          <form name="registrationForm" class="form-horizontal" ng-show="!posted">
             <div class="form-group">
               <label for="txtCompanyName" class="col-lg-2 control-label">Company Name</label>
               <div class="col-lg-10">
@@ -97,19 +99,33 @@
               </div>
             </div>
           </form>
+          <div ng-show="posted">
+            <p>You will receive an e-mail with instructions on how to access our web platform. Enjoy!</p>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" ng-click="sendRegistrationForm()" class="btn btn-primary">OK. Send me my password!</button>
+          <button type="button" ng-show="!posted" ng-click="sendRegistrationForm(user)" class="btn btn-primary">OK. Send me my password!</button>
         </div>
       </div>
     </div>
     <script>
     var app = angular.module('iwWebApp', []);
-    app.controller('registrationFormCtrl', function($scope) {
+    app.controller('registrationFormCtrl', function($scope, $http) {
+      //init
       $scope.user = {};
-      $scope.sendRegistrationForm = function(){
-        console.log($scope.user);
+
+      $scope.sendRegistrationForm = function(user){
+        $http.post('/api/user', user)
+        .then(function(res){
+          $scope.posted = true;
+          console.log('saved ', res.data)
+        },function(res) {
+          console.log('Error: ', res.data);
+          $scope.posted = true;
+          $scope.error = true;
+        });
+
       };
     });
     </script>
