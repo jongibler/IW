@@ -52,7 +52,7 @@
     </div>
   </nav>
 
-
+  <!-- body -->
   <div class="container">
     <div class="jumbotron">
       <h1>Please Register</h1>
@@ -61,7 +61,7 @@
     </div>
   </div>
 
-
+  <!-- TODO: refactor to file -->
   <!-- Modal Registration Form -->
   <div class="modal fade" id="modalRegistrationForm" ng-app="iwWebApp" ng-controller="registrationFormCtrl">
     <div class="modal-dialog">
@@ -116,7 +116,7 @@
       $scope.user = {};
 
       $scope.sendRegistrationForm = function(user){
-        $http.post('/api/user', user)
+        $http.post('/registrationForm', user)
         .then(function(res){
           $scope.posted = true;
           console.log('saved ', res.data)
