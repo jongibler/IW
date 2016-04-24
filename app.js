@@ -12,6 +12,7 @@ mongoose.connect('mongodb://iwWebApp:iw12345678@ds019970.mlab.com:19970/intellig
 //routes
 app.get('/', function (req, res) { res.sendFile(__dirname + '/public/index.html'); });
 app.use('/registrationForm', require('./public/registrationForm/registrationFormRouter.js'));
+app.use('/candidates', require('./authorised/candidates/candidatesRouter.js'));
 
 //start
 var port = process.argv[2];
