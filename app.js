@@ -9,6 +9,7 @@ app.set('view engine', 'ejs');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://iwWebApp:iw12345678@ds019970.mlab.com:19970/intelligentways');
 
+
 //routes
 app.get('/', function (req, res) { res.sendFile(__dirname + '/public/index.html'); });
 app.use('/registrationForm', require('./public/registrationForm/registrationFormRouter.js'));

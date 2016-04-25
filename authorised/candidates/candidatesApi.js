@@ -5,16 +5,23 @@ router.use(bodyParser.json());
 var Candidate = require('../../models/Candidate.js');
 
 
-router.get('/', function(req, res) {
-	Candidate.find(function(err, persons) {
+router.get('/getPage/:number', function(req, res) {
+	var pageNumber = req.params.number;
+	Candidate.find(function(err, candidates) {
 		if (err){
 			console.log(err);
 			res.status(500).send(err);
 			return;
 		}
-		res.json(persons);
-	});
+		Candidate.count({}, function(err, count){
+			res.json({page: candidates, lastPageNumber: Math.ceil(count/10)})
+		});		
+	})
+	.limit(10)
+	.skip((pageNumber-1)*10)
+	.sort('firstName');
 });
+
 
 
 module.exports = router;
