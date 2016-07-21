@@ -1,8 +1,18 @@
 angular.module('candidates', [])
 .controller('CandidatesController', function($scope, $http, $location) {
     var lastPageNumber;
+
+    $scope.showResults = false;
+    $scope.pageLoading = false;
     $scope.pageNumber = 1;
+    $scope.filter = '';
+
+    //onload
     getPage();
+
+    $scope.getPage = function() {
+      getPage();
+    };
 
     $scope.getNextPage = function() {
         if ($scope.pageNumber < lastPageNumber) {
@@ -48,13 +58,17 @@ angular.module('candidates', [])
     };
 
     function getPage() {
-      $http.get('/candidates/api/getPage/' + $scope.pageNumber)
+      $scope.pageLoading = true;
+      $http.get('/candidates/api/getPage/' + $scope.pageNumber + '?filter=' + $scope.filter)
           .success(function(data) {
               $scope.candidatesPage = data.page;
               lastPageNumber = data.lastPageNumber;
+              $scope.showResults = true;
+              $scope.pageLoading = false;
           })
           .error(function(data) {
               console.log('Error:' + data);
           });
     };
+
 });
