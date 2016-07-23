@@ -1,10 +1,14 @@
-angular.module('admin',  ['ngTagsInput'])
+angular.module('admin', ['ngTagsInput', 'ui.bootstrap'])
     .controller('AdminController', function ($scope, $http, $location) {
 
-         $scope.allTalents = [];
-        
-        $scope.talent = { name : "John", email: "a@acm", skills : [{text:'a'}]};
-         
+        $scope.allTalents = null;
+        $scope.selectedTalent = null;
+
+        var talentBackup = null;
+
+        $scope.setTalent = function (talent) {
+           $scope.selectedTalent =  angular.copy(talent);
+        };
 
         $http.get('/api/talent')
             .success(function (data) {

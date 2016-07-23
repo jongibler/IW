@@ -48,12 +48,12 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="talent in allTalents" ng-click="setTalent(talent,$index)" data-toggle="modal" data-target="#modalEditTalent">
+									<tr ng-repeat="talent in allTalents" ng-click="setTalent(talent)" data-toggle="modal" data-target="#modalEditTalent">
 										<td>{{talent.name}}</td>
 										<td>{{talent.email}}</td>
 										<td>
 											<a class="btn btn-info btn-xs skillTag" ng-repeat="skill in talent.skills">
-												{{skill}}
+												{{skill.text}}
 											</a>
 										</td>
 									</tr>
@@ -86,48 +86,41 @@
 								<div class="form-group">
 									<label for="txtName" class="col-lg-2 control-label">Name</label>
 									<div class="col-lg-8">
-										<input id="txtName" type="text" ng-model="talent.name" required class="form-control">
+										<input id="txtName" type="text" ng-model="selectedTalent.name" required class="form-control">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="txtEmail" class="col-lg-2 control-label">Email</label>
 									<div class="col-lg-8">
-										<input id="txtEmail" type="text" ng-model="talent.email" class="form-control">
+										<input id="txtEmail" type="text" ng-model="selectedTalent.email" class="form-control">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="txtSkills" class="col-lg-2 control-label">Tags</label>
 									<div class="col-lg-8">
-										<tags-input id="txtSkills" ng-model="talent.skills" min-length="1"></tags-input>
-									</div>
-								</div>
-
-								<!--<div class="form-group">
-									<div class="col-lg-8 col-lg-offset-2">
-										<p>
-											<a style="cursor:pointer;" data-toggle="modal" data-target="#modalUploadPDF">
-												<span ng-show="person.uploadedPDFUrl">View PDF</span>
-												<span ng-show="!person.uploadedPDFUrl">Upload PDF</span>
-											</a>
-										</p>
+										<tags-input id="txtSkills" ng-model="selectedTalent.skills" min-length="1"></tags-input>
 									</div>
 								</div>
 								<div class="form-group">
-									<div class="col-lg-8 col-lg-offset-2">
-										<a href="/admin" class="btn btn-default">Cancel</a>
-										<button type="submit" ng-click="save(person)" class="btn btn-primary">Save</button>
-										<button ng-show="!isNewPerson" type="button" data-toggle="modal" data-target="#modalDelete" class="btn btn-danger pull-right">
-											Delete
+									<label for="lnkDownloadCV" class="col-lg-2 control-label">CV</label>
+									<div class="col-lg-8">
+										<a style="margin-top:11px; float:left;" id="lnkDownloadCV" href="{{selectedTalent.cvURL}}" target="_blank">Download CV</a>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="btnAvailability" class="col-lg-2 control-label">Availability</label>
+									<div class="col-lg-8">
+										<button id="btnAvailability" type="button" class="btn btn-success" ng-model="selectedTalent.isAvailable" btn-checkbox>
+											{{selectedTalent.isAvailable ? "Available" : "Unavailable"}}
 										</button>
 									</div>
-								</div>-->
-
+								</div>
 							</fieldset>
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" ng-show="!posted" ng-click="sendRegistrationForm(user)" class="btn btn-primary">OK. Send me my password!</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" ng-click="saveTalent(talent)" class="btn btn-primary" data-dismiss="modal">Save and Close</button>
 					</div>
 				</div>
 			</div>

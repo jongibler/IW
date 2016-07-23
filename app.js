@@ -12,7 +12,7 @@ mongoose.connect('mongodb://iwWebApp:iw12345678@ds019970.mlab.com:19970/intellig
 
 //routes
 //app.get('/', function (req, res) { res.sendFile(__dirname + '/public/index.html'); });
-app.get(['/admin'], function (req, res) {res.render(__dirname + '/authorised/admin/index.ejs', { user : 'John Wayne'});})
+app.get(['/'], function (req, res) {res.render(__dirname + '/authorised/admin/index.ejs', { user : 'John Wayne'});})
 app.get('/admin/index.js', function (req, res) {res.sendFile(__dirname + '/authorised/admin/index.js')})
 
 //routers
