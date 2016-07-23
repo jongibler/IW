@@ -18,6 +18,9 @@
 				margin-right: 2px;
 				margin-top: 2px;
 			}
+			.btnAvailability {
+				width:112px;
+			}
 		</style>
 </head>
 
@@ -45,6 +48,7 @@
 										<th>Name</th>
 										<th>E-mail</th>
 										<th>Skills</th>
+										<th>Availability</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -55,6 +59,10 @@
 											<a class="btn btn-info btn-xs skillTag" ng-repeat="skill in talent.skills">
 												{{skill.text}}
 											</a>
+										</td>
+										<td>
+											<button class="btn btn-danger disabled btnAvailability" ng-show="!talent.isAvailable">Unavailable</button>
+											<button class="btn btn-success btnAvailability" ng-show="talent.isAvailable">Available</button>
 										</td>
 									</tr>
 								</tbody>
@@ -79,7 +87,7 @@
 					<div class="modal-body">
 						<form name="formTalent" class="form-horizontal">
 							<fieldset>
-								<legend>Main Details</legend>
+								<legend>Edit Talent</legend>
 								<div ng-show="message" class="alert alert-dismissible alert-success">
 									<button type="button" class="close" ng-click="message=''">×</button> {{message}}
 								</div>
@@ -110,7 +118,7 @@
 								<div class="form-group">
 									<label for="btnAvailability" class="col-lg-2 control-label">Availability</label>
 									<div class="col-lg-8">
-										<button id="btnAvailability" type="button" class="btn btn-success" ng-model="selectedTalent.isAvailable" btn-checkbox>
+										<button id="btnAvailability" type="button" ng:class="{true : 'btn btn-success btnAvailability', false : 'btn btn-danger disabled btnAvailability'}[selectedTalent.isAvailable]" ng-model="selectedTalent.isAvailable" btn-checkbox>
 											{{selectedTalent.isAvailable ? "Available" : "Unavailable"}}
 										</button>
 									</div>

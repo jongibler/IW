@@ -19,7 +19,7 @@ router.post('/', function (req, res) {
 				res.status(500).send(err);
 				return;
 			}
-			res.json(result);
+			res.send(result);
 		});
 
 
