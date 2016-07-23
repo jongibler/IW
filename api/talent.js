@@ -13,12 +13,22 @@ router.post('/', function (req, res) {
 	//copy props by name
 	for (var k in req.body) talent[k] = req.body[k];
 
-    talent.save(function (err, talent) {
-        if (err) {
-            res.status(500).send(err);
-        }
-        res.json(talent);
-    });
+	Talent.findOneAndUpdate({ _id: talent._id }, talent, { upsert: true },
+		function (err, result) {
+			if (err) {
+				res.status(500).send(err);
+				return;
+			}
+			res.json(result);
+		});
+
+
+    // talent.save(function (err, talent) {
+    //     if (err) {
+    //         res.status(500).send(err);
+    //     }
+    //     res.json(talent);
+    // });
 
 });
 

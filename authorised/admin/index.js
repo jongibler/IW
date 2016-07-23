@@ -3,11 +3,20 @@ angular.module('admin', ['ngTagsInput', 'ui.bootstrap'])
 
         $scope.allTalents = null;
         $scope.selectedTalent = null;
+        var persistTalent = null;
 
-        var talentBackup = null;
+        $scope.selectTalent = function (talent) {
+            $scope.selectedTalent = angular.copy(talent);
+            persistTalent = talent;
+        };
 
-        $scope.setTalent = function (talent) {
-           $scope.selectedTalent =  angular.copy(talent);
+        $scope.saveTalent = function (talent) {
+           	$http.post('/api/talent', talent)
+                .then(function (res) { 
+                    for (var k in talent) persistTalent[k] = talent[k];                    
+                }, function (res) {
+                    console.log('Error:' + res.data);
+                });
         };
 
         $http.get('/api/talent')
